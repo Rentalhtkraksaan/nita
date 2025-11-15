@@ -1,0 +1,244 @@
+
+  <!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>I Love U</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: black;
+      height: 100vh;
+      font-family: sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .hbd-bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 15vw;
+      font-weight: bold;
+      color: rgba(255,255,255,0.05);
+      z-index: 1;
+      user-select: none;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .falling {
+      position: absolute;
+      z-index: 3;
+      color: white;
+      animation: fall linear;
+      box-sizing: border-box;
+      word-break: break-word;
+      max-width: 90vw;
+      padding: 4px 8px;
+      text-align: center;
+    }
+    .falling img {
+      width: 15vw;
+      max-width: 80px;
+      height: auto;
+      border-radius: 10px;
+      display: block;
+      object-fit: contain;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(120vh);
+        opacity: 0.6;
+      }
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* --- Gaya Tombol Lanjut (Pojok Kanan Atas) --- */
+    .continue-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+      
+      /* Gaya Minimalis dan Warna Pink */
+      background: rgba(255, 105, 180, 0.2); /* Pink Transparan */
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: rgba(255, 105, 180, 0.5); /* Highlight Pink saat disentuh */
+      outline: none;
+      backdrop-filter: blur(5px);
+      transition: background 0.3s;
+    }
+    .continue-button:hover {
+      background: rgba(255, 105, 180, 0.4);
+    }
+    
+  </style>
+</head>
+<body>
+
+  <div class="hbd-bg">I LOVE U</div>
+
+  <canvas id="starsCanvas"></canvas>
+  <canvas id="fireworksCanvas"></canvas>
+
+  <audio autoplay loop>
+    <source src="manggil.mp3" type="audio/mp3">
+  </audio>
+  
+  <button class="continue-button" onclick="window.location.href='video.html'">
+    Lanjut ke Video ▶️
+  </button>
+
+  <script>
+    const words = [
+      "I Love U", "Sayang Kamu", "Rindu Terus", "Hanya Kamu", "Selalu Kamu",
+      "Cinta Selamanya", "My Everything", "Peluk Jauh", "Happy U Day", "Forever Love"
+    ];
+    const imageList = [
+      'foto1.jpg', 'foto2.jpg', 'foto3.jpg', 'foto4.jpg', 'foto5.jpg',
+      'foto6.jpg', 'foto7.jpg', 'foto9.jpg', 'foto10.jpg',
+      'foto11.jpg', 'foto12.jpg', 'foto13.jpg', 'foto14.jpg', 'foto15.jpg',
+      'foto16.jpg', 'foto17.jpg', 'foto18.jpg', 'foto19.jpg'
+    ];
+
+    function createFallingElement() {
+      const el = document.createElement('div');
+      el.className = 'falling';
+      const isImage = Math.random() < 0.5;
+
+      // Ukuran font dikembalikan ke semula (berdasarkan kode asli)
+      const fontSize = (3 + Math.random() * 2) + 'vw'; 
+      el.style.fontSize = fontSize;
+      el.style.animationDuration = (5 + Math.random() * 4) + 's';
+      el.style.top = (Math.random() * -100) + 'px';
+
+      const maxImageWidth = 80;
+      
+      if (isImage) {
+        const img = document.createElement('img');
+        img.src = imageList[Math.floor(Math.random() * imageList.length)];
+        el.appendChild(img);
+        el.style.left = Math.random() * (window.innerWidth - maxImageWidth) + 'px';
+      } else {
+        const text = words[Math.floor(Math.random() * words.length)];
+        el.textContent = text;
+        el.style.left = Math.random() * (window.innerWidth - 150) + 'px';
+      }
+
+      document.body.appendChild(el);
+      el.addEventListener('animationend', () => el.remove());
+    }
+
+    setInterval(createFallingElement, 700); // Interval dikembalikan ke 700ms
+
+    // Bintang
+    const starsCanvas = document.getElementById('starsCanvas');
+    const ctxStars = starsCanvas.getContext('2d');
+    
+    window.addEventListener('resize', () => {
+        starsCanvas.width = innerWidth;
+        starsCanvas.height = innerHeight;
+        fireworksCanvas.width = innerWidth;
+        fireworksCanvas.height = innerHeight;
+    });
+    
+    starsCanvas.width = innerWidth;
+    starsCanvas.height = innerHeight;
+
+    let stars = [];
+    function createStar() {
+      stars.push({
+        x: Math.random() * starsCanvas.width,
+        y: -5,
+        size: Math.random() * 2 + 1,
+        speed: Math.random() * 0.5 + 0.2
+      });
+    }
+
+    function animateStars() {
+      ctxStars.clearRect(0, 0, starsCanvas.width, starsCanvas.height);
+      stars.forEach((star, i) => {
+        ctxStars.beginPath();
+        ctxStars.arc(star.x, star.y, star.size, 0, 2 * Math.PI);
+        ctxStars.fillStyle = 'white';
+        ctxStars.fill();
+        star.y += star.speed;
+        if (star.y > starsCanvas.height) stars.splice(i, 1);
+      });
+      requestAnimationFrame(animateStars);
+    }
+
+    setInterval(createStar, 100);
+    animateStars();
+
+    // Kembang Api
+    const fireworksCanvas = document.getElementById('fireworksCanvas');
+    const ctxFireworks = fireworksCanvas.getContext('2d');
+    fireworksCanvas.width = innerWidth;
+    fireworksCanvas.height = innerHeight;
+
+    let fireworks = [];
+
+    function createFirework() {
+      const x = Math.random() * fireworksCanvas.width;
+      const y = Math.random() * fireworksCanvas.height / 2;
+      const particles = [];
+
+      for (let i = 0; i < 30; i++) {
+        const angle = Math.random() * 2 * Math.PI;
+        const speed = Math.random() * 4 + 1;
+        particles.push({
+          x,
+          y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          alpha: 1
+        });
+      }
+      fireworks.push(particles);
+    }
+
+    function animateFireworks() {
+      ctxFireworks.fillStyle = "rgba(0,0,0,0.2)";
+      ctxFireworks.fillRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
+
+      fireworks.forEach((particles, index) => {
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.alpha -= 0.02;
+        });
+
+        particles.forEach(p => {
+          ctxFireworks.beginPath();
+          ctxFireworks.arc(p.x, p.y, 2, 0, 2 * Math.PI);
+          ctxFireworks.fillStyle = `rgba(${255}, ${100 + Math.random()*155}, ${Math.random()*255}, ${p.alpha})`;
+          ctxFireworks.fill();
+        });
+
+        if (particles[0].alpha <= 0) fireworks.splice(index, 1);
+      });
+
+      requestAnimationFrame(animateFireworks);
+    }
+
+    setInterval(createFirework, 3000); // Interval dikembalikan ke 3000ms
+    animateFireworks();
+</script>
+
+</body>
+
+</html>

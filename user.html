@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Yuk, Ketemuan! ⚡</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <style>
+    /* Variabel Warna Ceria & Cute */
+    :root {
+      --primary-pink: #ff69b4; /* Hot Pink */
+      --secondary-yellow: #ffd700; /* Gold/Yellow Ceria */
+      --bg-color: #ffe4e1; /* Misty Rose */
+      --text-color: #5d3f6a; /* Ungu tua */
+      --error-red: #e74c3c;
+    }
+
+    /* 1. Mobile First Layout */
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Patrick Hand', cursive;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+      text-align: center;
+      padding: 10px;
+      margin: 0;
+      /* Mencegah scroll yang tidak perlu */
+      overflow-y: auto; 
+    }
+
+    .container {
+        background-color: white;
+        padding: 40px 25px; /* Padding lebih sedikit di samping untuk HP */
+        border-radius: 35px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        max-width: 90%; /* Selalu lebar 90% di HP */
+        width: 400px;
+        /* Tambahkan animasi muncul */
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    h1 {
+      color: var(--primary-pink);
+      font-family: 'Gochi Hand', cursive;
+      font-size: 2.5em; /* Ukuran font disesuaikan agar pas di HP */
+      margin-bottom: 5px;
+      text-shadow: 3px 3px 0px var(--secondary-yellow);
+    }
+    
+    p {
+        margin-bottom: 20px;
+        font-size: 1.3em;
+    }
+    
+    .emoji {
+        font-size: 3em;
+        margin-bottom: 10px;
+        animation: float 4s ease-in-out infinite;
+    }
+
+    /* Status & Input */
+    #status-message {
+        margin-bottom: 25px;
+        font-weight: bold;
+        font-size: 1.1em;
+        min-height: 20px;
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+    input, button {
+      width: 90%; /* Lebar penuh di HP */
+      max-width: 350px;
+      padding: 18px 10px; /* Padding vertikal lebih besar */
+      font-size: 1.3em;
+      border: 4px dashed var(--secondary-yellow);
+      border-radius: 30px; 
+      margin: 10px auto;
+      box-shadow: 0 6px 0 var(--pink-dark);
+      transition: all 0.15s ease;
+      font-family: 'Patrick Hand', cursive;
+      display: block;
+    }
+
+    input {
+      background-color: #fff9e6; /* Warna input sedikit kuning */
+      text-align: center;
+    }
+    
+    input:focus {
+        border-color: var(--primary-pink);
+        outline: none;
+    }
+
+    /* 2. Tombol Interaktif (Active State) */
+    button {
+      background-color: var(--primary-pink);
+      color: white;
+      cursor: pointer;
+      border-style: solid;
+      animation: bounce 1.2s infinite; 
+    }
+
+    button:hover:not(:disabled) {
+      background-color: var(--pink-dark);
+      transform: translateY(2px);
+      box-shadow: 0 4px 0 var(--pink-dark);
+      animation: none;
+    }
+    
+    /* State saat ditekan (Sangat penting di HP) */
+    button:active:not(:disabled) {
+      transform: translateY(6px);
+      box-shadow: 0 0 0 var(--pink-dark);
+      transition: transform 0.05s;
+    }
+    
+    button:disabled {
+        background-color: #ccc;
+        color: #777;
+        cursor: not-allowed;
+        animation: none;
+        box-shadow: 0 4px 0 #999;
+        transform: translateY(2px);
+    }
+    
+    /* 3. Loading State Visual */
+    .loading {
+        background-color: #f0f0f0;
+        color: #5d3f6a;
+        animation: loadingPulse 1s infinite alternate;
+    }
+
+
+    /* Keyframes untuk Animasi */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-10px) rotate(2deg); }
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+      40% {transform: translateY(-5px);}
+      60% {transform: translateY(-3px);}
+    }
+    @keyframes loadingPulse {
+        from { opacity: 0.7; }
+        to { opacity: 1; }
+    }
+    /* Menonaktifkan highlight biru standar di perangkat sentuh dan menggantinya dengan pink */
+body {
+  -webkit-tap-highlight-color: var(--primary-pink);
+}
+
+/* Mengatur warna teks atau latar belakang saat elemen ditekan */
+input:active,
+button:active {
+  /* Atur gaya aktif di sini jika perlu, tapi webkit-tap-highlight-color sudah menangani overlay */
+}
+  </style>
+</head>
+<body>
+
+  <div class="container" id="main-content">
+    <div class="emoji">✨💖✨</div>
+    <h1>Mau Ketemuu Gaaak?</h1>
+    <p>Cepat kasih tau lokasi elohh sekarang jugaa!</p>
+    
+    <div id="status-message">Menunggu status abang kece...</div>
+
+    <input type="text" id="nama" placeholder="Tulis nama cantikloooo..." />
+    <button id="kirim" disabled>💌 Kirim Lokasi Rahasia </button>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    // --- KONFIGURASI FIREBASE ---
+    const firebaseConfig = {
+      apiKey: "AIzaSyDpPEkKbEt6b_v2OWlBfGuaVQpBg2-RWR4",
+      authDomain: "cwu-gen-2.firebaseapp.com",
+      databaseURL: "https://cwu-gen-2-default-rtdb.firebaseio.com",
+      projectId: "cwu-gen-2",
+      storageBucket: "cwu-gen-2.appspot.com",
+      messagingSenderId: "40585612014",
+      appId: "1:40585612014:web:c88141fee369aca68181ff",
+      measurementId: "G-S8D7DFJ1G3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    
+    const REDIRECT_URL = "offline.html"; 
+    const kontrolRef = ref(db, "kontrol/status");
+    
+    const kirimButton = document.getElementById('kirim');
+    const namaInput = document.getElementById('nama');
+    const statusMessage = document.getElementById('status-message');
+    const mainContent = document.getElementById('main-content');
+
+    // Helper untuk Haptic Feedback (Getar)
+    const triggerHaptic = (duration = 50) => {
+        if ("vibrate" in navigator) {
+            navigator.vibrate(duration);
+        }
+    };
+
+
+    // --- LISTENER KONTROL ADMIN & REDIRECT ---
+    onValue(kontrolRef, snapshot => {
+        const isTrackingOn = snapshot.val() === true;
+        
+        mainContent.style.opacity = 1;
+
+        if (isTrackingOn) {
+            kirimButton.disabled = false;
+            kirimButton.classList.remove('loading');
+            statusMessage.textContent = "🥳 Abang ON! Kasih tau, dong, kamu di mana!";
+            statusMessage.style.color = "var(--primary-pink)";
+            kirimButton.textContent = "💌 Kirim Lokasi Rahasia adikkkk";
+        } else {
+            console.log("Status OFF, mengalihkan...");
+            window.location.href = REDIRECT_URL;
+        }
+    }, { onlyOnce: false }); 
+
+    
+    // --- LOGIKA PENGIRIMAN LOKASI ---
+    kirimButton.addEventListener('click', () => {
+      triggerHaptic(50); // Getar saat tombol ditekan
+      
+      if (kirimButton.disabled) {
+          alert("Admin belum nyalain. Sabar ya, cantik.");
+          return;
+      }
+      
+      const nama = namaInput.value.trim();
+      if (!nama) {
+        alert("Jangan lupa isi nama dulu cantikkk");
+        return;
+      }
+
+      kirimButton.disabled = true;
+      kirimButton.classList.add('loading');
+      kirimButton.textContent = "Mengambil Lokasimu... ⏳";
+      
+      if (!navigator.geolocation) {
+        alert("HP kamu nggak support fitur lokasi :(");
+        kirimButton.disabled = false;
+        kirimButton.classList.remove('loading');
+        kirimButton.textContent = "Gagal! Coba lagi.";
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(pos => {
+        triggerHaptic(100); // Getar saat lokasi ditemukan
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        const waktu = Date.now();
+        
+        // Kirim lokasi ke Firebase
+        set(ref(db, "lokasiTerkirim/" + nama), { lat, lng, waktu })
+          .then(() => {
+              triggerHaptic(300); // Getar panjang saat sukses
+              alert(`Yeay! Lokasi kamu udah di tangan abang kece, Tungguin aku datang yaa, ${nama} sayang! 🛵`);
+              kirimButton.textContent = "✅ Lokasi Terkirim!";
+              kirimButton.classList.remove('loading');
+              setTimeout(() => kirimButton.disabled = false, 500);
+          })
+          .catch(err => {
+              triggerHaptic(500); // Getar saat gagal
+              alert("Aduh, gagal kirim lokasi. Coba lagi, ya! " + err.message);
+              kirimButton.disabled = false;
+              kirimButton.classList.remove('loading');
+              kirimButton.textContent = "Gagal Kirim! Coba Lagi.";
+          });
+      }, err => {
+        triggerHaptic(500); // Getar saat gagal
+        alert("Gagal ambil lokasi. Pastikan kamu izinkan (Allow), ya! " + err.message);
+        kirimButton.disabled = false;
+        kirimButton.classList.remove('loading');
+        kirimButton.textContent = "Gagal Kirim! Coba Lagi.";
+      }, { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }); // Opsi lokasi lebih baik untuk HP
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Istirahat Dulu, Sayang! 😴</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Patrick+Hand&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --sad-blue: #a9cce3; 
+            --sad-gray: #7f8c8d;
+            --bg-color-sad: #f8f9f9;
+            --text-color-sad: #34495e;
+            --icon-color: #f39c12;
+            --primary-pink: #ff69b4;
+        }
+        
+        body {
+            background-color: var(--bg-color-sad);
+            color: var(--text-color-sad);
+            font-family: 'Patrick Hand', cursive;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            -webkit-tap-highlight-color: var(--primary-pink);
+        }
+
+        .sad-container {
+            background-color: white;
+            padding: 40px 25px;
+            border-radius: 20px;
+            border: 5px solid var(--sad-blue);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 400px;
+            animation: bounceIn 0.9s ease-out;
+        }
+
+        h1 {
+            color: var(--text-color-sad);
+            font-family: 'Gochi Hand', cursive;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            font-size: 1.1em;
+            color: var(--sad-gray);
+            margin-bottom: 30px;
+        }
+        
+        .sad-emoji {
+            font-size: 4em;
+            color: var(--icon-color);
+            margin-bottom: 20px;
+            animation: blink 2s infinite; 
+        }
+
+        /* Tombol Back */
+        .btn-back {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--sad-blue);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.3em;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #7ba7c3;
+            transition: 0.15s ease;
+            font-family: 'Gochi Hand', cursive;
+        }
+
+        .btn-back:active {
+            transform: translateY(2px);
+            box-shadow: 0 3px 0 #7ba7c3;
+        }
+
+        /* Animasi */
+        @keyframes blink {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(0.95); opacity: 0.5; }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.75); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sad-container">
+        <div class="sad-emoji">😴</div>
+
+        <h1>Maaf, Abang Sedang Bobo!</h1>
+
+        <p>
+            Pengiriman lokasi sedang <b>OFF</b> ya, sayang.  
+            Biarkan aku istirahat sebentar…  
+            Nanti kalau sudah ON abang kabarin kamu lagi 🤍
+        </p>
+
+        <!-- TOMBOL BACK -->
+        <button class="btn-back" onclick="location.href='index.html'">⬅️ Balik ke Halaman Awal</button>
+    </div>
+</body>
+</html>

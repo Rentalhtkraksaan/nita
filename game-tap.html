@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tap The Love 💘 + Trap Bomb 💣</title>
+
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        background: #ffe9f3;
+        font-family: 'Patrick Hand', cursive;
+    }
+    #score {
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        font-size: 2em;
+        color: #ff4e9c;
+        background: white;
+        padding: 10px 20px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .obj {
+        position: absolute;
+        font-size: 3.5em;
+        cursor: pointer;
+        transition: transform 0.1s;
+    }
+</style>
+</head>
+<body>
+
+<div id="score">💘 Score: 0</div>
+
+<script>
+let score = 0;
+let spawnCount = 0;
+let gameOver = false;
+
+const scoreDisplay = document.getElementById("score");
+
+function spawnObject() {
+    if (gameOver) return;
+
+    spawnCount++;
+
+    const obj = document.createElement("div");
+    obj.classList.add("obj");
+
+    let isBomb = false;
+
+    // ★ LOGIKA JEBAKAN
+    if (spawnCount === 1) {
+        obj.innerHTML = "💘"; 
+    } else if (spawnCount === 2) {
+        obj.innerHTML = "💣"; 
+        isBomb = true;
+    } else {
+        if (Math.random() < 0.3) {
+            obj.innerHTML = "💣";
+            isBomb = true;
+        } else {
+            obj.innerHTML = "💘";
+        }
+    }
+
+    const x = Math.random() * (window.innerWidth - 70);
+    const y = Math.random() * (window.innerHeight - 150);
+
+    obj.style.left = x + "px";
+    obj.style.top = y + "px";
+
+    document.body.appendChild(obj);
+
+    obj.addEventListener("click", () => {
+        if (isBomb) {
+            endGame();
+        } else {
+            score++;
+            scoreDisplay.innerHTML = `💘 Score: ${score}`;
+            obj.style.transform = "scale(1.4)";
+            setTimeout(() => obj.remove(), 80);
+        }
+    });
+
+    setTimeout(() => {
+        if (!gameOver && document.body.contains(obj)) {
+            obj.remove();
+        }
+    }, 1000);
+}
+
+function endGame() {
+    gameOver = true;
+
+    // POPUP GAME OVER
+    document.body.innerHTML += `
+        <div id="popup" style="
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+            color:white;
+            font-size:2em;
+            text-align:center;
+            backdrop-filter: blur(3px);
+            padding: 20px;
+        ">
+            <div style="
+                background: rgba(255,255,255,0.15);
+                padding: 25px 35px;
+                border-radius: 20px;
+                border: 2px solid white;
+            ">
+                💥 <br>
+                <b>Semangat ya sayang 😘</b><br>
+                coba lagi yuk…<br><br>
+                <span style="font-size:1.2em;">
+                    Skor kamu: <b>${score}</b>
+                </span>
+                <br><br>
+
+                <button onclick="location.reload()" style="
+                    padding:10px 20px;
+                    font-size:0.8em;
+                    background:white;
+                    border-radius:15px;
+                    border:2px solid #ff7ab8;
+                    margin-bottom:10px;
+                ">Main Lagi</button>
+                <br>
+
+                <button onclick="location.href='game.html'" style="
+                    padding:10px 20px;
+                    font-size:0.8em;
+                    background:white;
+                    border-radius:15px;
+                    border:2px solid #8b8bff;
+                    margin-bottom:10px;
+                ">Balik ke Menu</button>
+                <br>
+
+          
+            </div>
+        </div>
+    `;
+}
+
+setInterval(spawnObject, 900);
+</script>
+
+</body>
+</html>

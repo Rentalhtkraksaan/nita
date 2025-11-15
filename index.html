@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Hi Sayang! 💖</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #ff69b4;
+            --secondary-yellow: #ffd700;
+            --bg-color: #ffe4e1;
+            --text-color: #5d3f6a;
+            --pink-dark: #cc5291;
+            --button-text: #34495e;
+
+            /* tambahan biar ga error */
+            --sad-gray: #c0c0c0;
+            --pink-light: #ffb6d9;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Patrick Hand', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .landing-container {
+            background-color: white;
+            padding: 50px 30px;
+            border-radius: 35px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+            width: 400px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        h1 {
+            color: var(--primary-pink);
+            font-family: 'Gochi Hand', cursive;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 0px var(--secondary-yellow);
+        }
+
+        p {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .emoji {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        button {
+            width: 100%;
+            padding: 18px 10px;
+            font-size: 1.4em;
+            border: 4px solid var(--primary-pink);
+            border-radius: 30px;
+            box-shadow: 0 6px 0 var(--pink-dark);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-family: 'Gochi Hand', cursive;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-yellow);
+            color: var(--text-color);
+            animation: pulse 2s infinite;
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: var(--pink-dark);
+            border-style: dashed;
+            box-shadow: 0 4px 0 var(--sad-gray);
+        }
+
+        /* TOMBOL GAME (STYLE CUTE PINK) */
+        .btn-game {
+            background-color: var(--primary-pink);
+            color: white;
+            border-color: var(--pink-dark);
+            box-shadow: 0 6px 0 var(--pink-dark);
+        }
+
+        button:active, button:hover:not(.btn-secondary) {
+            transform: translateY(2px);
+            box-shadow: 0 4px 0 var(--pink-dark);
+        }
+
+        .btn-secondary:active, .btn-secondary:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 var(--sad-gray);
+            background-color: var(--pink-light);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.7); }
+            70% { transform: scale(1.03); box-shadow: 0 0 0 10px rgba(255, 105, 180, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 105, 180, 0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="landing-container">
+        <div class="emoji">👋🥰</div>
+        <h1>Hai, Sayangku!</h1>
+        <p>langsung saja, aku sayaaaaaang banget sama kamuuu 💖</p>
+        
+        <div class="button-group">
+            <button class="btn-primary" onclick="location.href='user.html'">Tap untuk Lanjut! 💖</button>
+            <button class="btn-secondary" onclick="location.href='moment.html'">Liat Momen Dulu 📸</button>
+
+            <!-- TOMBOL GAME BARU -->
+            <button class="btn-game" onclick="location.href='game.html'">Main Game Dulu Yuk 🎮💗</button>
+        </div>
+    </div>
+
+</body>
+</html>
